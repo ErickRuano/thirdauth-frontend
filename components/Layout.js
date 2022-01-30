@@ -22,7 +22,7 @@ const App = ({children, name, button, description}) => {
                     </div>
                 </nav>
             </div>
-            <div className='overflow-auto h-full w-full mx-auto py-5' >
+            <div className='overflow-y-scroll h-full w-full mx-auto py-5' >
                 <div className="px-10 lg:px-0 max-w-screen-2xl m-auto">
                     <div className="flex justify-between items-center">
                         <div className='flex flex-col items-start'>

@@ -8,38 +8,53 @@ import Detail from './_components/Detail'
 import Settings from './_components/Settings'
 
 const defaultApp = {
-    name: 'My first app',
-    description: '',
-    type: '',
-    collectionAddress: '',
-    itemId: '',
-    walletAddress: '',
-    walletPrivateKey: '',
-    walletPublicKey: '',
+    "name": "Test application",
+    "successURL": "/success",
+    "errorURL": "/error",
+    "rules": [
+        {
+            "type": "ANY_OF_COLLECTION",
+            "reference": { "collectionAddress" : "x0" }
+        }, {
+            "type": "SPECIFIC_TOKEN",
+            "reference": {
+                "collectionAddress": "x0",
+                "tokenId": "0"
+            }
+        }
+    ]
 }
 
 const tabs = [{
     label: 'Details',
     id: 'details',
 },{
-    label: 'Settings',
-    id: 'settings',
+    label: 'How to use',
+    id: 'code',
 }]
 
-const Dashboard = () => {
 
+const Dashboard = () => {
+    
     const [active, setActive] = useState('details')
+    let app = defaultApp
 
     return (
-        <Layout name={defaultApp.name} description={'Application description'} button={
-            <button className="btn btn-primary btn-outline">
-                edit
-            </button>
+        <Layout name={app.name} description={'Application description'} button={
+            <div className='flex gap-5'>
+                <button className="btn btn-primary">
+                    save
+                </button>
+                <button className="btn btn-error btn-outline">
+                    delete
+                </button>
+            </div>
         }>
             <Tabs tabs={tabs} onTabChange={setActive} active={active} />
-            <div className='mb-10'></div>
-            {active === 'details' && <Detail />}
-            {active === 'settings' && <Settings />}
+            <div className='mt-10'>
+                {active === 'details' && <Detail {...{app}} />}
+                {active === 'code' && <Settings />}
+            </div>
         </Layout>
       );
 }

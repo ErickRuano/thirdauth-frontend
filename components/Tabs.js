@@ -3,9 +3,9 @@ const Tabs = ({tabs = [], onTabChange, active}) => {
   return (
     <div className="flex">
       <div className="tabs">
-          {tabs.map((tab) => {
+          {tabs.map((tab, index) => {
             return (
-              <a className={`tab tab-bordered no-underline ${tab.id === active ? 'tab-active' : ''}`} onClick={() => onTabChange(tab.id)}>{tab.label}</a>
+              <a key={index} className={`tab tab-bordered no-underline ${tab.id === active ? 'tab-active' : ''}`} onClick={() => onTabChange(tab.id)}>{tab.label}</a>
             )
           }
         )}
