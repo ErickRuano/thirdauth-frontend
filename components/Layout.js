@@ -23,7 +23,7 @@ const App = ({children, name, button, description}) => {
                 </nav>
             </div>
             <div className='overflow-auto h-full w-full mx-auto py-5' >
-                <div className="max-w-screen-2xl m-auto">
+                <div className="px-10 lg:px-0 max-w-screen-2xl m-auto">
                     <div className="flex justify-between items-center">
                         <div className='flex flex-col items-start'>
                             <h1 className='noMargin'>{name}</h1>
