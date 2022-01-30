@@ -25,7 +25,7 @@ export default function Home() {
       const response = await fetch("/api/sign", {
         method: "POST",
         headers: {},
-        body: JSON.stringify({ address: address, signedChallenge: signedChallenge })
+        body: JSON.stringify({ address, signedChallenge })
       });
       console.log(response); 
       return response.json();//this should be a jwt
