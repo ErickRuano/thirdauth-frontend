@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Logo}  from '../components/Logo'
+import { Logo } from '../components/Logo'
 import Link from 'next/link';
 import { useWeb3, useSwitchNetwork } from "@3rdweb/hooks"
 import { useState } from "react"
@@ -10,9 +10,27 @@ export default function Home() {
   const { address, chainId, connectWallet, disconnectWallet, provider } = useWeb3();
   const { switchNetwork } = useSwitchNetwork();
   const [email, setEmail] = useState("");
-  
+
   const [jwt, setJwt] = useState(null);
   const [username, setUsername] = useState(null);
+
+  const handleSign = async (e) => {
+    e.preventDefault();
+    const signer = provider.getSigner();
+    console.log("Signer = ", signer);
+    const signedChallenge = await signer.signMessage(`Hola soy ${address}`); //valite if this is the message to sign, maybe use a different message like random string or uuid
+    if (signedChallenge) {
+      console.log(signedChallenge);
+      //request to server
+      const response = await fetch("/api/sign", {
+        method: "POST",
+        headers: {},
+        body: JSON.stringify({ address: address, signedChallenge: signedChallenge })
+      });
+      console.log(response); 
+      return response.json();//this should be a jwt
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
@@ -31,7 +49,7 @@ export default function Home() {
         <h1 className="text-6xl font-bold">
           Web3{' '}
           <span className="text-6xl font-bold text-primary-500" >
-             authentication
+            authentication
           </span>
         </h1>
 
@@ -58,9 +76,15 @@ export default function Home() {
                 Disconnect
               </button>
 
+              <button onClick={handleSign}>
+                SignIn
+              </button>
+
               <span>
                 {console.log(provider)}
               </span>
+
+
             </>
           ) : (
             <>
