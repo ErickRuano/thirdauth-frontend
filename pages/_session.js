@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
-// import {login} from '../services/auth'
+import { useRouter } from 'next/router'
 
 const Session = ({children}) => {
   const [logged, setLogged] = useState(false);
+  const router = useRouter()
+
   useEffect(() => {
-    // login().then(setProfile)
-    true ? setLogged(true) : setLogged(false);
-    return () => {
-      console.log(logged)
-    };
+    //read token from localStorage
+      if (localStorage.getItem("token")) {
+        setLogged(true);
+      } else {
+        router.push({
+            pathname: '/'
+        });
+        setLogged(false);
+      }
+      // localStorage.getItem("token") ? setLogged(true) : setLogged(false);
+    // return () => {
+    //   console.log(logged)
+    // };
   }, []);
     return (
         <>

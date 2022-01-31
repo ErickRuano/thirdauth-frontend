@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
-import { getProfile } from "../../../services/profile";
+import { getProfile, addOne } from "../../../services/profile";
 
 import Layout from '../../../components/Layout'
 import Tabs from  '../../../components/Tabs'
@@ -21,45 +21,35 @@ const tabs = [{
     id: 'code',
 }]
 
-const defaultApp = {
-    "name": "Test application",
+const defaultProfile = {
+    "name": "My new profile",
     "successURL": "/success",
     "errorURL": "/error",
-    "rules": [
-        {
-            "type": "ANY_OF_COLLECTION",
-            "reference": { "collectionAddress" : "x0" }
-        }, {
-            "type": "SPECIFIC_TOKEN",
-            "reference": {
-                "collectionAddress": "x0",
-                "tokenId": "0"
-            }
-        }
-    ]
+    "rules": []
 }
 
 const Index = ({create = false}) => {
-    const [profile, setProfile] = useState()
+    const router = useRouter()
+
+    const [profile, setProfile] = useState(defaultProfile)
     const [active, setActive] = useState('details')
 
-    const router = useRouter()
-    console.log(router)
-
-    const app = !create ? defaultApp : {
-        "name": 'My new profile',
-        "successURL": '',
-        "errorURL": '',
-        "rules": []
+    const startHere = async (id) => {
+        !create && getProfile(id).then((response) => {
+            'status' in response && !response.data ? setProfile(defaultProfile) : setProfile(response)
+        })
     }
 
-    const startHere = async(id) => {
-        console.log(id)
-        let response = await getProfile(id)
-        setProfile(response)
-        console.log(response)
-    }
+    const save = async () => {
+        console.log(create)
+        if(create){
+            addOne(profile).then((response) => {
+                'status' in response && !response.data ? console.log(response) : router.push({pathname: '/profiles/[id]', query: {id: response.data.id}})
+            })
+        }else{
 
+        }
+    }
     useEffect(() => {
         const { id } = router.query
         if(id){
@@ -72,10 +62,10 @@ const Index = ({create = false}) => {
     }, [router]);
     
     return (
-        <Layout name={app.name} description={'Application description'} button={
+        <Layout name={profile.name} description={profile.description} button={
             <div className='flex gap-5'>
-                <Button className='btn-primary '>
-                    Save
+                <Button className='btn-primary' handler={save} loading={false}>
+                    {create ? 'Save' : 'Update'}
                 </Button>
                 <Button className='btn-error btn-outline '>
                     delete
@@ -84,8 +74,8 @@ const Index = ({create = false}) => {
         }>
             <Tabs tabs={tabs} onTabChange={setActive} active={active} />
             <div className='mt-10'>
-                {active === 'details' && <Detail {...{app}} />}
-                {active === 'collections' && <Collections {...{app}} />}
+                {active === 'details' && <Detail {...{profile}} />}
+                {active === 'collections' && <Collections {...{profile}} />}
                 {active === 'code' && <Settings />}
             </div>
         </Layout>

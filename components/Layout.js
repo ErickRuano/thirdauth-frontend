@@ -9,6 +9,10 @@ const Layout = ({children, name, button, description}) => {
 
     return (
         <div className="h-screen overflow-hidden flex flex-col prose lg:prose-base max-w-none bg-gray-900">
+            <Head>
+                <title>{name} - thirAuth, Web3 authentication</title>
+                {/* <link rel="icon" href="/favicon.ico" /> */}
+            </Head>
             <div className='px-10 w-full mx-auto'>
                 <nav className="w-full py-5 flex justify-between items-center">
                     <Logo />
@@ -22,7 +26,7 @@ const Layout = ({children, name, button, description}) => {
                     </div>
                 </nav>
             </div>
-            <div className='overflow-y-scroll w-full mx-auto py-10' >
+            <div className='overflow-y-scroll w-full mx-auto py-10 px-10 2xl:px-0' >
                 <div className="px-10 lg:px-0 max-w-screen-2xl m-auto">
                     <div className="flex justify-between items-center">
                         <div className='flex flex-col items-start'>

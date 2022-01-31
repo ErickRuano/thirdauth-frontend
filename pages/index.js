@@ -5,37 +5,48 @@ import Link from 'next/link';
 import { useWeb3, useSwitchNetwork } from "@3rdweb/hooks"
 import { useState } from "react"
 import {login} from '../services/auth'
+import { useRouter } from 'next/router'
 
 import metaLogo from '../assets/metaMaskLogo.svg'
 
 export default function Home() {
   const { address, chainId, connectWallet, disconnectWallet, provider } = useWeb3();
   const { switchNetwork } = useSwitchNetwork();
-  const [email, setEmail] = useState("");
+  const router = useRouter()
 
-  const [jwt, setJwt] = useState(null);
+  const [responseError, setError] = useState(null);
   const [username, setUsername] = useState(null);
 
   const handleSign = async (e) => {
     e.preventDefault();
     const signer = provider.getSigner();
-    console.log("Signer = ", signer);
+    // console.log("Signer = ", signer);
     let message = `Hola soy ${address}`
     const signedChallenge = await signer.signMessage(message); //valite if this is the message to sign, maybe use a different message like random string or uuid
     if (signedChallenge) {
-      console.log(signedChallenge);
+      // console.log(signedChallenge);
       //request to server
-      login(address, signedChallenge, message).then( response => setJwt(response) )
-      console.log("JWT = ", jwt);
-      
+      try {
+        let response = await login(address, signedChallenge, message)
+        // console.log(response.token)
+        if (response.token) {
+          localStorage.setItem("token", response.token);
+          router.push({
+              pathname: '/profiles'
+          });
+        }
+      } catch (responseError) {
+        // console.log(responseError)
+        setError('Invalid credentials, please try again');
+      }
     }
   }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
       <Head>
-        <title>thirdAuth, Web3 authentication</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Web3 authentication</title>
+        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <nav className="max-w-screen-xl w-full py-5 flex justify-between items-center">
         <Logo />
@@ -58,10 +69,21 @@ export default function Home() {
         {
           address ? (
             <>
-              <Button className='mt-5 btn-primary' handler={handleSign}>
-                {/* <img src={metaLogo.src} className='w-6 mr-3' alt="MetaMask Logo" /> */}
-                Sign in
-              </Button>
+              {
+                //read localstorage
+                localStorage.getItem("token") ? (
+                  <Button className='mt-5 btn-primary' handler={e => router.push({pathname: '/profiles'})}>
+                    {/* <img src={metaLogo.src} className='w-6 mr-3' alt="MetaMask Logo" /> */}
+                    Go to dashboard
+                  </Button>
+                ) : (
+                  <Button className='mt-5 btn-primary' handler={handleSign}>
+                    {/* <img src={metaLogo.src} className='w-6 mr-3' alt="MetaMask Logo" /> */}
+                    Sign in
+                  </Button>
+                )
+              }
+              {responseError && <p className='text-sm mt-3 text-error font-semibold uppercase'>{responseError}</p>}
             </>
           ) : (
             <>

@@ -2,40 +2,21 @@ import Layout from '../../components/Layout'
 import {Placeholder} from '../../components/Placeholder'
 import Button from '../../components/Button'
 import Link from 'next/link';
-
-let profiles = [{
-        name: 'Profile 1',
-        description: 'This is the first profile',
-        id: 1},
-    {
-        name: 'Profile 2',
-        description: 'This is the second profile',
-        id: 2},
-    {
-        name: 'Profile 3',
-        description: 'This is the third profile',
-        id: 3},
-    {
-        name: 'Profile 4',
-        description: 'This is the fourth profile',
-        id: 4},
-    {
-        name: 'Profile 5',
-        description: 'This is the fifth profile',
-        id: 5},
-    {
-        name: 'Profile 6',
-        description: 'This is the sixth profile',
-        id: 6},
-    {
-        name: 'Profile 7',
-        description: 'This is the seventh profile',
-        id: 7
-    }
-]
-
+import {getProfiles} from '../../services/profile'
+import { useEffect, useState } from 'react';
 // profiles = []
 const Dashboard = () => {
+    const [profiles, setProfiles] = useState([])
+    useEffect(() => {
+        try {
+            getProfiles().then((response) => {
+                // console.log(response)
+                'status' in response && !response.data ? null : setProfiles(response)
+            })
+        } catch (error) {
+            // console.log(error)
+        }
+    }, []);
     return (
         <Layout name='Profiles' description={'My profiles'} button={
             // <button className="btn btn-primary">
@@ -74,7 +55,7 @@ const Dashboard = () => {
                         </div>
                     )) :
                     <div className="col-span-3 flex justify-center">
-                        <Placeholder title="Add new" messagge='Connect wallet and add new profile' icon="account_balance_wallet" />
+                        <Placeholder title="No profiles" messagge='Add your first profile' icon="login" />
                     </div>
                 }
             </div>

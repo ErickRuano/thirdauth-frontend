@@ -2,15 +2,15 @@ import Icon from '../../../../components/Icon';
 import { Placeholder } from '../../../../components/Placeholder';
 import Select from '../../../../components/Select';
 
-function addNewRule(app) {
-    app.rules = [...app.rules, {
+function addNewRule(profile) {
+    profile.rules = [...profile.rules, {
         type: 'ANY_OF_COLLECTION',
         reference: { 
             collectionAddress: 'x0', 
             tokenId: '0'
         }
     }];
-    console.log(app)
+    console.log(profile)
 }
 
 const rulesTypes = [{
@@ -21,22 +21,22 @@ const rulesTypes = [{
     value: 'SPECIFIC_TOKEN'
 }]
 
-const Detail = ({app}) => {
-
+const Detail = ({profile}) => {
+    profile.description ? null : profile.description = ''
     return (
         <div>
             <h2 className="noMargin">Details</h2>
             <div></div>
             <div className="flex gap-10 mt-5">
-                <input onChange={() => {}} type="text" placeholder="Application name" className="input w-full" value={app.name}></input>
-                <input onChange={() => {}} type="text" placeholder="Description" className="input w-full" value={app.description}></input>
+                <input onChange={(e) => {profile.name = e.target.value}} type="text" placeholder="Application name" className="input w-full" value={profile.name} />
+                <input onChange={() => {}} type="text" placeholder="Description" className="input w-full" value={profile.description}></input>
             </div>
             <div className="mb-10"></div>
             <h2 className="noMargin">Rules</h2>
             <div className="mb-5"></div>
             <div className="grid grid-cols-3 gap-10">
                 {
-                    app.rules.map((rule, i) => (
+                    profile.rules.map((rule, i) => (
                         <div className="card card-bordered bg-gray-800" key={i}>
                             <div className="card-body">
                                 <h3 className="card-title noMargin">
@@ -61,7 +61,7 @@ const Detail = ({app}) => {
                         </div>
                     ))
                 }
-                <div className="card card-bordered bg-gray-800 hover:bg-gray-900 hover:cursor-pointer" onClick={() => addNewRule(app)}>
+                <div className="card card-bordered bg-gray-800 hover:bg-gray-900 hover:cursor-pointer" onClick={() => addNewRule(profile)}>
                     <div className="card-body h-full flex items-start justify-center">
                         <Placeholder icon='add' title='Add new rule' messagge='Specify new rule in this application.'></Placeholder>
                     </div>
