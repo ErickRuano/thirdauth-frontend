@@ -21,44 +21,56 @@ const tabs = [{
     id: 'code',
 }]
 
+const defaultApp = {
+    "name": "Test application",
+    "successURL": "/success",
+    "errorURL": "/error",
+    "rules": [
+        {
+            "type": "ANY_OF_COLLECTION",
+            "reference": { "collectionAddress" : "x0" }
+        }, {
+            "type": "SPECIFIC_TOKEN",
+            "reference": {
+                "collectionAddress": "x0",
+                "tokenId": "0"
+            }
+        }
+    ]
+}
 
 const Index = ({create = false}) => {
-    const router = useRouter()
-    const { id } = router.query
     const [profile, setProfile] = useState()
-    
-    console.log(id)
-
-    useEffect(() => {
-        getProfile('cdd0db1d-53e8-421b-ac9e-9004bd93ed83').then(setProfile)
-        // console.log(profile)
-    }, []);
-    
     const [active, setActive] = useState('details')
-    const defaultApp = {
-        "name": "Test application",
-        "successURL": "/success",
-        "errorURL": "/error",
-        "rules": [
-            {
-                "type": "ANY_OF_COLLECTION",
-                "reference": { "collectionAddress" : "x0" }
-            }, {
-                "type": "SPECIFIC_TOKEN",
-                "reference": {
-                    "collectionAddress": "x0",
-                    "tokenId": "0"
-                }
-            }
-        ]
-    }
-    let app = !create ? defaultApp : {
+
+    const router = useRouter()
+    console.log(router)
+
+    const app = !create ? defaultApp : {
         "name": 'My new profile',
         "successURL": '',
         "errorURL": '',
         "rules": []
     }
 
+    const startHere = async(id) => {
+        console.log(id)
+        let response = await getProfile(id)
+        setProfile(response)
+        console.log(response)
+    }
+
+    useEffect(() => {
+        const { id } = router.query
+        if(id){
+            try {
+                startHere(id)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }, [router]);
+    
     return (
         <Layout name={app.name} description={'Application description'} button={
             <div className='flex gap-5'>

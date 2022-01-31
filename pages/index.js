@@ -4,6 +4,7 @@ import Button from '../components/Button'
 import Link from 'next/link';
 import { useWeb3, useSwitchNetwork } from "@3rdweb/hooks"
 import { useState } from "react"
+import {login} from '../services/auth'
 
 import metaLogo from '../assets/metaMaskLogo.svg'
 
@@ -11,9 +12,24 @@ export default function Home() {
   const { address, chainId, connectWallet, disconnectWallet, provider } = useWeb3();
   const { switchNetwork } = useSwitchNetwork();
   const [email, setEmail] = useState("");
-  
+
   const [jwt, setJwt] = useState(null);
   const [username, setUsername] = useState(null);
+
+  const handleSign = async (e) => {
+    e.preventDefault();
+    const signer = provider.getSigner();
+    console.log("Signer = ", signer);
+    let message = `Hola soy ${address}`
+    const signedChallenge = await signer.signMessage(message); //valite if this is the message to sign, maybe use a different message like random string or uuid
+    if (signedChallenge) {
+      console.log(signedChallenge);
+      //request to server
+      login(address, signedChallenge, message).then( response => setJwt(response) )
+      console.log("JWT = ", jwt);
+      
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
@@ -32,7 +48,7 @@ export default function Home() {
         <h1 className="text-6xl font-bold">
           Web3{' '}
           <span className="text-6xl font-bold text-primary-500" >
-             authentication
+            authentication
           </span>
         </h1>
 
@@ -42,26 +58,10 @@ export default function Home() {
         {
           address ? (
             <>
-              Address: {address}
-              <br />
-              Chain ID: {chainId}
-              <br />
-
-              <button onClick={() => switchNetwork(1)}>
-                Switch to Mainnet
-              </button>
-
-              <button onClick={() => switchNetwork(4)}>
-                Switch to Rinkeby
-              </button>
-
-              <button onClick={disconnectWallet}>
-                Disconnect
-              </button>
-
-              <span>
-                {console.log(provider)}
-              </span>
+              <Button className='mt-5 btn-primary' handler={handleSign}>
+                {/* <img src={metaLogo.src} className='w-6 mr-3' alt="MetaMask Logo" /> */}
+                Sign in
+              </Button>
             </>
           ) : (
             <>
