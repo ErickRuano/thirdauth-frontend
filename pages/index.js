@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import {Logo}  from '../components/Logo'
+import Button from '../components/Button'
 import Link from 'next/link';
 import { useWeb3, useSwitchNetwork } from "@3rdweb/hooks"
 import { useState } from "react"
@@ -64,11 +65,14 @@ export default function Home() {
             </>
           ) : (
             <>
-
-              <button onClick={() => connectWallet("injected")} className='btn bg-white px-4 py-3 text-gray-900 mt-10'>
+              <Button className='mt-5 bg-white text-gray-700' handler={() => connectWallet("injected")}>
                 <img src={metaLogo.src} className='w-6 mr-3' alt="MetaMask Logo" />
                 Connect MetaMask
-              </button>
+              </Button>
+              {/* <button onClick={() => connectWallet("injected")} className='btn bg-white px-4 py-3 text-gray-900 mt-10'>
+                <img src={metaLogo.src} className='w-6 mr-3' alt="MetaMask Logo" />
+                Connect MetaMask
+              </button> */}
             </>
           )
         }

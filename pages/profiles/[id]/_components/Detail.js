@@ -1,5 +1,6 @@
 import Icon from '../../../../components/Icon';
 import { Placeholder } from '../../../../components/Placeholder';
+import Select from '../../../../components/Select';
 
 function addNewRule(app) {
     app.rules = [...app.rules, {
@@ -11,6 +12,14 @@ function addNewRule(app) {
     }];
     console.log(app)
 }
+
+const rulesTypes = [{
+    label: 'Any of collection',
+    value: 'ANY_OF_COLLECTION'
+},{
+    label: 'Specific token',
+    value: 'SPECIFIC_TOKEN'
+}]
 
 const Detail = ({app}) => {
 
@@ -36,18 +45,14 @@ const Detail = ({app}) => {
                                 <div></div>
                                 <div className="flex gap-5 mt-5 items-center">
                                     <Icon name='style'/>
-                                    <select class="select select-bordered flex-grow">
-                                        <option disabled="disabled" selected="selected">Authorization type</option> 
-                                        <option>Find NFT in collection</option> 
-                                        <option>Find transaction in wallet</option>
-                                    </select>
+                                    <Select options={rulesTypes} onChange={e => console.log(e.target.value)} value={rule.type} />
                                 </div>
                                 <div className="flex gap-5 mt-5 items-center">
                                     <Icon name='apps'/>
                                     <input onChange={() => {}} type="text" placeholder="Collection address" className="input w-full" value={rule?.reference?.collectionAddress}></input>
                                 </div>
                                 {
-                                    rule.type == 'SPECIFIC_TOKEN' && <div className="flex gap-5 mt-3 items-center">
+                                    rule.type == 'SPECIFIC_TOKEN' && <div className="flex gap-5 mt-5 items-center">
                                         <Icon name='description'/>
                                         <input onChange={() => {}} type="text" placeholder="Token Id" className="input w-full" value={rule?.reference?.tokenId} />
                                     </div>

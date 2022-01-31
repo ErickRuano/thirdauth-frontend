@@ -27,7 +27,7 @@ const Dashboard = () => {
                     <label className="label">
                         <span className="label-text">Type</span>
                     </label>
-                    <select class="select select-bordered w-full">
+                    <select className="select select-bordered w-full">
                         <option disabled="disabled" selected="selected">Authorization type</option> 
                         <option>Find NFT in collection</option> 
                         <option>Find transaction in wallet</option>

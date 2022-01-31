@@ -4,6 +4,7 @@ import Head from 'next/head'
 // import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
 import { ThirdwebWeb3Provider } from "@3rdweb/hooks";
 import { useRouter } from 'next/router';
+import Session from './_session';
 
 //  List pages you want to be publicly accessible, or leave empty if
 //  every page requires authentication. Use this naming strategy:
@@ -41,9 +42,9 @@ const connectors = {
 function MyApp({ Component, pageProps }) {
   // Get the pathname
   const { pathname } = useRouter();
-  console.log(pathname);
+  // console.log(pathname);
   // Check if the current route matches a public page
-  // const isPublicPage = publicPages.includes(pathname);
+  const isPublicPage = publicPages.includes(pathname);
 
   // If the current route is listed as public, render it directly
   // Otherwise, use Clerk to require authentication
@@ -52,22 +53,19 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
       </Head>
-      {/* <ClerkProvider>
+      {/* <ClerkProvider> */}
+      <ThirdwebWeb3Provider connectors={connectors} supportedChainIds={supportedChainIds} >
         {isPublicPage ? (
           <Component {...pageProps} />
         ) : (
           <>
-            <SignedIn> */}
-              <ThirdwebWeb3Provider connectors={connectors} supportedChainIds={supportedChainIds} >
-                <Component {...pageProps} />
-              </ThirdwebWeb3Provider>
-            {/* </SignedIn>
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
+              <Session>
+                  <Component {...pageProps} />
+              </Session>
           </>
         )}
-      </ClerkProvider> */}
+      </ThirdwebWeb3Provider>
+      {/* </ClerkProvider> */}
     </>
   );
 }

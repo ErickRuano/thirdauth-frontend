@@ -4,11 +4,11 @@ import Link from 'next/link';
 // import { useUser, UserButton } from '@clerk/nextjs';
 import githubLogo from '../assets/githubLogo.svg'
 
-const App = ({children, name, button, description}) => {
+const Layout = ({children, name, button, description}) => {
     // const { firstName } = useUser();
 
     return (
-        <div className="h-screen overflow-hidden  prose lg:prose-base max-w-none bg-gray-900">
+        <div className="h-screen overflow-hidden flex flex-col prose lg:prose-base max-w-none bg-gray-900">
             <div className='px-10 w-full mx-auto'>
                 <nav className="w-full py-5 flex justify-between items-center">
                     <Logo />
@@ -22,7 +22,7 @@ const App = ({children, name, button, description}) => {
                     </div>
                 </nav>
             </div>
-            <div className='overflow-y-scroll h-full w-full mx-auto py-5' >
+            <div className='overflow-y-scroll w-full mx-auto py-10' >
                 <div className="px-10 lg:px-0 max-w-screen-2xl m-auto">
                     <div className="flex justify-between items-center">
                         <div className='flex flex-col items-start'>
@@ -39,4 +39,4 @@ const App = ({children, name, button, description}) => {
       );
 }
   
-export default App;
+export default Layout;
