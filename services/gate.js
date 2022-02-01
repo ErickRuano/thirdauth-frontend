@@ -1,4 +1,4 @@
-import request from './request'
+import {request} from './request'
 
 export const gate = async ({ address, signature, message, profileId }) => {
     const url = '/api/public/gate'
