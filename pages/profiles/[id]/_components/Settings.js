@@ -27,7 +27,7 @@ const Settings = ({profile}) => {
               {'\n'}
             </pre>
             <pre>
-              {'<SignIn profileID=\'YOUR_PROFILE_ID\'>'}
+              {'<SignIn profileId=\'YOUR_PROFILE_ID\' />'}
             </pre>
           </div>
         </div>

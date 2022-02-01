@@ -7,7 +7,11 @@ import { useState } from "react"
 import {login} from '../services/auth'
 import { useRouter } from 'next/router'
 
+import githubLogo from '../assets/githubLogo.svg'
 import metaLogo from '../assets/metaMaskLogo.svg'
+import thirdwebLogo from '../assets/thirdweb.png'
+import vercelLogo from '../assets/vercel-logotype-light.svg'
+
 
 export default function Home() {
   const { address, chainId, connectWallet, disconnectWallet, provider } = useWeb3();
@@ -51,7 +55,9 @@ export default function Home() {
       <nav className="max-w-screen-xl w-full py-5 flex justify-between items-center">
         <Logo />
         <Link href="https://github.com/ErickRuano/thirdauth-frontend">
-          <a className='text-white text-base cursor-pointer hover:text-primary-600 font-bold'>GitHub</a>
+            <a className='text-white text-base cursor-pointer hover:text-primary-600 font-bold'>
+                <img src={githubLogo.src} alt="" className='noMargin h-8'/>
+            </a>
         </Link>
       </nav>
 
@@ -63,8 +69,8 @@ export default function Home() {
           </span>
         </h1>
 
-        <p className="text-2xl">
-          Powered by thirdweb and vercel
+        <p className="text-2xl flex items-center gap-2">
+          Powered by <img src={thirdwebLogo.src} alt="thirdweb" className='h-5' /> and <img src={vercelLogo.src} alt="vercel"  className='h-4' />
         </p>
         {
           address ? (
@@ -113,8 +119,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Made with ❤️ by UNKNOWN
-          {/* <img src="/vercel.svg" alt="Vercel Logo" className="ml-2 h-4" /> */}
+          Made with ❤️ by thirdAuth Team
         </a>
       </footer>
     </div>

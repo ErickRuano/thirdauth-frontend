@@ -13,9 +13,9 @@ import Collections from './_components/Collections'
 const tabs = [{
     label: 'Details',
     id: 'details',
-},{
-    label: 'Collections',
-    id: 'collections',
+// },{
+//     label: 'Collections',
+//     id: 'collections',
 },{
     label: 'How to use',
     id: 'code',
@@ -99,7 +99,7 @@ const Index = ({create = false}) => {
             <Tabs tabs={tabs} onTabChange={setActive} active={active} />
             <div className='mt-10'>
                 {active === 'details' && <Detail updateProfile={updateProfile} {...{profile}} />}
-                {active === 'collections' && <Collections {...{profile}} />}
+                {/* {active === 'collections' && <Collections {...{profile}} />} */}
                 {active === 'code' && <Settings profile={profile} />}
             </div>
         </Layout>
