@@ -1,4 +1,4 @@
-import { SignIn } from "./SignIn.js";
+import SignIn from "./SignIn.js";
 
 const Settings = ({profile}) => {
 
