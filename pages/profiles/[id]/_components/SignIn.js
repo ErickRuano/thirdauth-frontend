@@ -1,7 +1,7 @@
 import { useWeb3, useSwitchNetwork } from "@3rdweb/hooks"
 import { gate } from '../../../../services/gate';
 
-export const SignIn = ({ profileId }) => {
+export default ({ profileId }) => {
     const { address, provider } = useWeb3();
     const signatureMessage = `Sign in as ${address}`;
     const onClickHandler = async () => {
