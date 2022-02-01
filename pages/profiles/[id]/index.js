@@ -76,7 +76,7 @@ const Index = ({create = false}) => {
             <div className='mt-10'>
                 {active === 'details' && <Detail {...{profile}} />}
                 {active === 'collections' && <Collections {...{profile}} />}
-                {active === 'code' && <Settings />}
+                {active === 'code' && <Settings profile={profile} />}
             </div>
         </Layout>
       );
