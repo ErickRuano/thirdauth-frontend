@@ -47,7 +47,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white px-20 2xl:px-0">
       <Head>
         <title>Web3 authentication</title>
         <link rel="icon" href="/favicon.png" />
@@ -61,7 +61,7 @@ export default function Home() {
         </Link>
       </nav>
 
-      <main className="flex w-full max-w-screen-xl flex-1 flex-col items-center justify-center px-20 text-center">
+      <main className="flex w-full max-w-screen-xl flex-1 flex-col items-center justify-center text-center">
         <h1 className="text-6xl font-bold">
           Web3{' '}
           <span className="text-6xl font-bold text-primary-500" >
@@ -112,13 +112,8 @@ export default function Home() {
 
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://github.com/ErickRuano/thirdauth-frontend"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      <footer className="flex h-24 w-full items-center justify-center border-t opacity-20">
+        <a className="flex items-center justify-center" href="https://github.com/ErickRuano/thirdauth-frontend" target="_blank" rel="noopener noreferrer" >
           Made with ❤️ by thirdAuth Team
         </a>
       </footer>
