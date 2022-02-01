@@ -1,17 +1,17 @@
+import { useState } from 'react';
 import Head from 'next/head'
 import {Logo}  from '../components/Logo'
+import ProgressBar from  '../components/ProgressBar'
 import Link from 'next/link';
 // import { useUser, UserButton } from '@clerk/nextjs';
 import githubLogo from '../assets/githubLogo.svg'
 
-const Layout = ({children, name, button, description}) => {
-    // const { firstName } = useUser();
-
+const Layout = ({children, name, button, description, loading = false}) => {
     return (
         <div className="h-screen overflow-hidden flex flex-col prose lg:prose-base max-w-none bg-gray-900">
             <Head>
                 <title>{name} - thirAuth, Web3 authentication</title>
-                {/* <link rel="icon" href="/favicon.ico" /> */}
+                <link rel="icon" href="/favicon.png" />
             </Head>
             <div className='px-10 w-full mx-auto'>
                 <nav className="w-full py-5 flex justify-between items-center">
@@ -26,7 +26,13 @@ const Layout = ({children, name, button, description}) => {
                     </div>
                 </nav>
             </div>
-            <div className='overflow-y-scroll w-full mx-auto py-10 px-10 2xl:px-0' >
+            {
+                loading && <div className="h-1 w-full relative">
+                    <ProgressBar />
+                </div>
+            }
+            {
+                !loading && <div className='overflow-y-scroll w-full mx-auto py-10 px-10 2xl:px-0' >
                 <div className="px-10 lg:px-0 max-w-screen-2xl m-auto">
                     <div className="flex justify-between items-center">
                         <div className='flex flex-col items-start'>
@@ -39,6 +45,7 @@ const Layout = ({children, name, button, description}) => {
                     {children}
                 </div>
             </div>
+            }
         </div>
       );
 }

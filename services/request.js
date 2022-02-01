@@ -2,9 +2,9 @@ import axios from 'axios'
 
 const BASE = 'https://api.thirdauth.com'
 
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: BASE,
-    timeout: 1000,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
         authorization: `${ (typeof window !== "undefined") ? localStorage.getItem('token') : null}`,
@@ -12,7 +12,8 @@ const instance = axios.create({
   });
   
 
-const request = (url, method, params) => {
+export const request = (url, method, params) => {
+    instance.defaults.headers['authorization'] = `${ (typeof window !== "undefined") ? localStorage.getItem('token') : null}`
     return new Promise((resolve, reject) => {
         instance[method](BASE + url, params)
         .then((response) => {
@@ -24,4 +25,4 @@ const request = (url, method, params) => {
     })
 }
 
-export default request
+// export default request

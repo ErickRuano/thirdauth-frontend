@@ -46,7 +46,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
       <Head>
         <title>Web3 authentication</title>
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <nav className="max-w-screen-xl w-full py-5 flex justify-between items-center">
         <Logo />

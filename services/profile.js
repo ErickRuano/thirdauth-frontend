@@ -1,4 +1,4 @@
-import request from './request'
+import {request} from './request'
 
 export const getProfile = async (id) => {
     const url = `/api/project/${id}`
@@ -19,7 +19,13 @@ export const addOne = async (body) => {
 }
 
 export const updateOne = async (body) => {
-    const url = `/api/project`
-    let {response} = await request(url, 'get', body)
+    const url = `/api/project/${body.id}`
+    let {response} = await request(url, 'put', body)
+    return response.data || response
+}
+
+export const deleteOne = async (id) => {
+    const url = `/api/project/${id}`
+    let {response} = await request(url, 'delete', {})
     return response.data || response
 }

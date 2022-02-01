@@ -1,4 +1,4 @@
-import request from './request'
+import {request} from './request'
 
 export const login = async (wallet, signature, message) => {
     const url = '/api/public/authenticate'
