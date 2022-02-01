@@ -43,7 +43,7 @@ const Dashboard = () => {
                 </Link>
             </Button>
         }>
-            <div className="grid grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {profiles.length > 0 ? 
                     profiles.map((profile, i) => (
                         <div className="card card-bordered bg-gray-800" key={i}>

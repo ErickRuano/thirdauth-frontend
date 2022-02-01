@@ -44,18 +44,18 @@ const Detail = ({profile, updateProfile}) => {
         <div>
             <h2 className="noMargin">Details</h2>
             <div></div>
-            <div className="flex gap-10 mt-5">
+            <div className="flex flex-col md:flex-row gap-10 mt-5">
                 <input onChange={(e) => {updateProfile({ ...profile, name: e.target.value})}} type="text" placeholder="Application name" className="input w-full" value={profile.name} />
                 <input onChange={(e) => {updateProfile({ ...profile, description: e.target.value})}} type="text" placeholder="Description" className="input w-full" value={profile.description}></input>
             </div>
-            <div className="flex gap-10 mt-5">
+            <div className="flex flex-col md:flex-row gap-10 mt-10 md:mt-5">
                 <input onChange={(e) => {updateProfile({ ...profile, successURL: e.target.value})}} type="text" placeholder="Success URL" className="input w-full" value={profile.successURL} />
                 <input onChange={(e) => {updateProfile({ ...profile, errorURL: e.target.value})}} type="text" placeholder="Error URL" className="input w-full" value={profile.errorURL}></input>
             </div>
             <div className="mb-10"></div>
             <h2 className="noMargin">Rules</h2>
             <div className="mb-5"></div>
-            <div className="grid grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {
                     profile.rules.map((rule, i) => (
                         <div className="card card-bordered bg-gray-800" key={i}>

@@ -33,7 +33,7 @@ const Layout = ({children, name, button, description, loading = false}) => {
             }
             {
                 !loading && <div className='overflow-y-scroll w-full mx-auto py-10 px-10 2xl:px-0' >
-                <div className="px-10 lg:px-0 max-w-screen-2xl m-auto">
+                <div className="lg:px-0 max-w-screen-2xl m-auto">
                     <div className="flex justify-between items-center">
                         <div className='flex flex-col items-start'>
                             <h1 className='noMargin'>{name}</h1>
